@@ -21,7 +21,7 @@ description: Как искать актуальную документацию A
 |---|---|
 | OpenCode | `https://opencode.ai/docs/` |
 | JSON-схема конфига OpenCode | `https://opencode.ai/config.json` |
-| Ollama API | `https://raw.githubusercontent.com/ollama/ollama/main/docs/api.md` |
+| LiteLLM / llama.cpp | `http://127.0.0.1:4000/v1/models` + `http://127.0.0.1:8081/v1/models` |
 | MCP | `https://modelcontextprotocol.io/docs` |
 | GitHub API | `https://docs.github.com/en/rest` |
 | PowerShell | `Get-Help <cmd> -Online` (локально, без сети) |
@@ -37,7 +37,7 @@ description: Как искать актуальную документацию A
 node --version
 & D:\Apps\node\node.exe --version   # если нода поставлена в D:\Apps
 git --version
-& D:\Apps\ollama\app\ollama.exe --version
+& D:\Apps\Services\litellm\.venv\Scripts\python.exe -c "from importlib.metadata import version; print(version('litellm'))"
 ```
 
 Пример для v3 и v5 часто отличается, а страница документации показывает только актуальную версию и не предупреждает об удалённых полях.
