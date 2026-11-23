@@ -48,3 +48,4 @@ HTTP-каталог (`skills: ["https://..."]`) не поддерживает а
 | `secrets-audit` | Скан ключей в файлах и git-истории + `scripts/scan-secrets.ps1` |
 | `docs-lookup` | Документация через websearch/webfetch, выжимка в файл |
 | `mcp-setup` | MCP в OpenCode V2, OAuth, HTTP-каталоги скилов |
+| `sherlock` | Поиск аккаунтов по нику на ~400 сайтах (интернет-след) |
