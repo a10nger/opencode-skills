@@ -59,13 +59,6 @@
             ]
         },
         {
-            "name": "sherlock",
-            "version": "1",
-            "files": [
-                "SKILL.md"
-            ]
-        },
-        {
             "name": "windows-admin",
             "version": "1",
             "files": [
