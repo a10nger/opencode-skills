@@ -1,97 +1,76 @@
 ---
 name: Ollama Local
-description: Работа с локальным Ollama на этой машине — модели, контекст, квантизация, скорость, настройка local-worker и small_model в OpenCode. Использовать при задачах с локальными моделями, GPU/VRAM и делегированием.
+description: Диагностика локального Ollama на этой машине — модели, API, VRAM. Использовать при задачах с Ollama; перед утверждениями о моделях всегда проверять ollama list и opencode.json.
 ---
 
 # Ollama Local
 
-## Установка (проверено)
+## Текущее состояние (проверено 2026-11-24)
 
-| | |
-|---|---|
-| Бинарь | `D:\Apps\ollama\app\ollama.exe` |
-| Веса | `D:\Apps\ollama\models` (`OLLAMA_MODELS`) |
-| Модели | `qwen3:8b` (Q4_K_M, 5.0 GB), GGUF-копия `models\gguf\Qwen3-8B-Q4_K_M.gguf` |
-| GPU | RTX 4060 Laptop, **8 GB VRAM**, 16 GB RAM |
-| API | `http://127.0.0.1:11434` (OpenAI-совместимый `/v1`) |
+- `ollama list` пуст: установленных моделей нет. `qwen3:8b` была удалена и **не является доступной моделью**.
+- OpenCode **не использует Ollama**: в `C:\Users\zhega\.config\opencode\opencode.json` значения `model` и `small_model` равны `litellm/pool`.
+- Агент `local-worker` использует `llama30b/qwen3-30b-a3b` (llama.cpp на `127.0.0.1:8081`), не Ollama.
+- Плагина `ollama-autostart.ts` нет; автозапуск выполняет `plugins/litellm-autostart.ts`.
+- Бинарь Ollama: `D:\Apps\Models\ollama\app\ollama.exe`; `OLLAMA_MODELS=D:\Apps\ollama\models`; API: `http://127.0.0.1:11434`. Сервер может быть запущен, но моделей в нём нет.
 
-В `C:\Users\zhega\.config\opencode\opencode.json`:
-- `small_model: ollama/qwen3:8b` — для служебных задач (заголовки, компакция);
-- агент `local-worker` (`~/.config/opencode/agents/local-worker.md`) — исполнитель;
-- плагин `plugins/ollama-autostart.ts` поднимает сервер.
+**Правило:** любое утверждение о наличии модели, `small_model` или бэкенде OpenCode начинается с вызова инструмента. Значения из этого файла, из скилов, из конфига агента и из прошлых сообщений считаются недоверенными, пока не перечитаны из источника.
 
-## Основные команды
+## Проверка состояния
 
 ```powershell
-$o = 'D:\Apps\ollama\app\ollama.exe'
-& $o list
-& $o ps                      # что загружено сейчас + размер в VRAM
-& $o show qwen3:8b           # параметры, шаблон, лицензия
+$o = 'D:\Apps\Models\ollama\app\ollama.exe'
+& $o list                       # список моделей; сейчас пусто
+& $o ps                         # загруженные модели; сейчас пусто
+Get-Content 'C:\Users\zhega\.config\opencode\opencode.json' | Select-String '"model"|"small_model"'
+Select-String '^model:' 'C:\Users\zhega\.config\opencode\agents\local-worker.md'
+Invoke-RestMethod http://127.0.0.1:11434/api/tags
+```
+
+## Если модель понадобится снова
+
+```powershell
 & $o pull <model>
+& $o show <model>               # параметры, шаблон, лицензия
 & $o rm <model>
 & $o stop
 ```
 
-## Бюджет памяти — главное ограничение
+Не добавлять `ollama/*` в `model` или `small_model` без явного решения пользователя и повторной проверки конфига.
 
-8 GB VRAM. Прикидка: `вес_GB + KV-cache`. KV-cache растёт **линейно с `num_ctx`**.
+## Бюджет памяти
 
-- qwen3:8b Q4_K_M ≈ 5.0 GB + контекст.
-- `num_ctx` 8192 → комфортно, ~6.5 GB, полностью на GPU.
-- `num_ctx` 32768 → KV-cache ~2–3 GB, часть слоёв уходит на CPU, скорость падает в 3–5 раз.
-- Признак вытеснения на CPU: `ollama ps` показывает `100% CPU` вместо `100% GPU`.
+RTX 4060 Laptop, 8 GB VRAM, 16 GB RAM. Размер модели + KV-cache должен помещаться в VRAM; KV-cache растёт линейно с `num_ctx`. Признак вытеснения на CPU — `ollama ps` показывает `100% CPU`. Для 8B-моделей не ставить `num_ctx` больше 16k; при необходимости большего контекста брать модель 3–4B.
 
-Правило: **не ставить `num_ctx` больше 16k** для 8B на этой карте. Если нужно больше контекста — брать модель 3–4B, а не расширять окно.
+Контекст через Modelfile:
 
-## Настройка контекста
-
-Через Modelfile (постоянно):
 ```
-FROM qwen3:8b
+FROM <model>
 PARAMETER num_ctx 8192
 PARAMETER temperature 0.2
 ```
-`ollama create qwen3-8b-ctx8k -f Modelfile`
 
-Через API (разово): `"options": {"num_ctx": 8192, "num_predict": 1024}`.
-`num_predict` обязательно ограничивать — иначе модель генерит до упора и таймаут.
-
-`keep_alive`: `-1` держит модель в VRAM вечно (быстро, но занимает память), `"5m"` — по умолчанию. Для `local-worker` держать `-1` смысла нет, если работа пачками.
+Через API: `"options": {"num_ctx": 8192, "num_predict": 1024}` — `num_predict` ограничивать обязательно.
 
 ## Замер скорости
 
 ```powershell
-$body = @{ model='qwen3:8b'; prompt='Count 1 to 20'; stream=$false } | ConvertTo-Json
-Measure-Command {
-  $r = Invoke-RestMethod -Uri http://127.0.0.1:11434/api/generate -Method Post -Body $body -ContentType 'application/json'
-} | Select-Object TotalSeconds
-$r.eval_count / ($r.eval_duration / 1e9)   # tok/s
+$body = @{ model='<установленная модель>'; prompt='Count 1 to 20'; stream=$false } | ConvertTo-Json
+$r = Invoke-RestMethod -Uri http://127.0.0.1:11434/api/generate -Method Post -Body $body -ContentType 'application/json'
+$r.eval_count / ($r.eval_duration / 1e9)
 ```
-Ориентир для 4060 Laptop: 25–45 tok/s на 8B Q4 при полном GPU offload. Ниже 10 — модель на CPU, искать причину в контексте.
-
-## Tool-calling и пределы 8B
-
-qwen3:8b умеет tool calls, но:
-- ломается на 3+ последовательных tool call в одном шаге;
-- не держит длинные системные промпты (>2k токенов инструкций);
-- путает аргументы, если у тула больше 4 параметров;
-- на сложных edit-задачах (несколько несвязанных правок в файле) чаще всего проваливается.
-
-Практика: один tool call на шаг, один файл на задачу, явные абсолютные пути, никакой двусмысленности. Провалился дважды на одном шаге — забирать задачу себе.
 
 ## Диагностика
 
 ```powershell
-Get-Process ollama* -ErrorAction SilentlyContinue | Select-Object Name,Id,@{n='RAM_GB';e={[math]::Round($_.WorkingSet64/1GB,1)}}
+Get-Process ollama* -ErrorAction SilentlyContinue | Select-Object Name,Id
 Get-Content D:\Apps\ollama\serve.err.log -Tail 40
-Invoke-RestMethod http://127.0.0.1:11434/api/tags   # сервер жив?
+Get-NetTCPConnection -LocalPort 11434 -ErrorAction SilentlyContinue
 nvidia-smi --query-gpu=memory.used,memory.total --format=csv
 ```
 
-Сервер не отвечает → проверить, не занят ли порт 11434 другим процессом (`Get-NetTCPConnection -LocalPort 11434`), и лог `ollama-autostart.log` в Temp.
-
 ## Что не делать
 
-- Не тянуть модели >8B Q4 на эту карту «для качества» — будет CPU-offload.
-- Не хранить веса на `C:`.
-- Не запускать две модели одновременно: 8 GB VRAM хватит только на одну.
+- Не называть `qwen3:8b` установленной или доступной без вывода `ollama list`.
+- Не утверждать, что OpenCode использует Ollama, не перечитав `opencode.json`.
+- Не тянуть модели >8B Q4 «для качества» на эту видеокарту.
+- Не хранить веса на `C:` и не запускать две модели одновременно.
