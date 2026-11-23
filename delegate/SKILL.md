@@ -5,7 +5,7 @@ description: Как ставить задачи субагенту local-worker 
 
 # Delegate
 
-Цель — не жечь облачные токены на механике. `local-worker` — локальный исполнитель, стоит ноль, но ошибается чаще. Точную модель и бэкенд не называть по памяти: перечитать `C:\Users\zhega\.config\opencode\agents\local-worker.md` и `opencode.json` (на 2026-11-24 агент использует `llama30b/qwen3-30b-a3b`, OpenCode — `litellm/pool`; Ollama-моделей нет).
+Цель — не жечь облачные токены на механике. `local-worker` — локальный исполнитель, стоит ноль, но ошибается чаще. Точную модель и бэкенд не называть по памяти и не брать из этого файла: перечитать `C:\Users\zhega\.config\opencode\agents\local-worker.md` и `C:\Users\zhega\.config\opencode\opencode.json`. Любое название модели, приведённое здесь или в промпте, не является выводом команды.
 
 ## Что делегировать
 
