@@ -44,7 +44,6 @@ HTTP-каталог (`skills: ["https://..."]`) не поддерживает а
 | `ollama-local` | Локальный Ollama, VRAM-бюджет, `num_ctx`, замер tok/s, пределы 8B |
 | `debug-powershell` | Провалы PS 5.1: нет `&&`, BOM, `$LASTEXITCODE`, JSON, процессы |
 | `git-workflow` | Коммиты, ветки, worktree, CRLF, откаты, секреты в истории |
-| `delegate` | Постановка задач `local-worker` и когда забирать себе |
 | `secrets-audit` | Скан ключей в файлах и git-истории + `scripts/scan-secrets.ps1` |
 | `docs-lookup` | Документация через websearch/webfetch, выжимка в файл |
 | `mcp-setup` | MCP в OpenCode V2, OAuth, HTTP-каталоги скилов |
