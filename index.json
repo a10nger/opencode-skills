@@ -8,13 +8,6 @@
             ]
         },
         {
-            "name": "delegate",
-            "version": "1",
-            "files": [
-                "SKILL.md"
-            ]
-        },
-        {
             "name": "docs-lookup",
             "version": "1",
             "files": [
