@@ -1,61 +1,69 @@
 ﻿{
-    "skills":  [
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "debug-powershell",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "delegate",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "docs-lookup",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "git-workflow",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "mcp-setup",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "ollama-local",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md",
-                                     "scripts/scan-secrets.ps1"
-                                 ],
-                       "name":  "secrets-audit",
-                       "version":  "1"
-                   },
-                   {
-                       "files":  [
-                                     "SKILL.md"
-                                 ],
-                       "name":  "windows-admin",
-                       "version":  "1"
-                   }
-               ]
+    "skills": [
+        {
+            "name": "debug-powershell",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "delegate",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "docs-lookup",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "git-workflow",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "mcp-setup",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "ollama-local",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "secrets-audit",
+            "version": "1",
+            "files": [
+                "SKILL.md",
+                "scripts/scan-secrets.ps1"
+            ]
+        },
+        {
+            "name": "screen-capture",
+            "version": "1",
+            "files": [
+                "SKILL.md",
+                "scripts/capture-screen.ps1"
+            ]
+        },
+        {
+            "name": "windows-admin",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        }
+    ]
 }
