@@ -12,7 +12,7 @@ description: Работа с git на Windows — коммиты, ветки, wo
 Формат: `<scope>: <что сделано>` — императив, английский, до 72 символов.
 
 ```
-config: route local-worker to qwen3:8b
+config: route local-worker to llama30b
 skills: add windows-admin skill
 fix(plugin): stop autostart when port busy
 ```
