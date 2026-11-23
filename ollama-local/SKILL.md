@@ -7,13 +7,13 @@ description: Диагностика локального Ollama на этой м
 
 ## Текущее состояние (проверено 2026-11-24)
 
+- Ollama отключена по решению пользователя: ярлык автозапуска удалён, процессы остановлены, порт `11434` закрыт. Не перезапускать без явной просьбы.
 - `ollama list` пуст: установленных моделей нет. `qwen3:8b` была удалена и **не является доступной моделью**.
 - OpenCode **не использует Ollama как бэкенд**: точные значения `model` и `small_model` перечитать из `C:\Users\zhega\.config\opencode\opencode.json`, не из этого файла.
-- Агент `local-worker` работает через llama.cpp (`127.0.0.1:8081`), не через Ollama; точную модель сверять с `C:\Users\zhega\.config\opencode\agents\local-worker.md`.
-- Плагина `ollama-autostart.ts` нет; автозапуск выполняет `plugins/litellm-autostart.ts`.
-- Бинарь Ollama: `D:\Apps\Models\ollama\app\ollama.exe`; `OLLAMA_MODELS=D:\Apps\ollama\models`; API: `http://127.0.0.1:11434`. Сервер может быть запущен, но моделей в нём нет.
+- Плагина `ollama-autostart.ts` нет; автозапуск выполняет `plugins/litellm-autostart.ts` (только llama.cpp, не Ollama).
+- Бинарь Ollama: `D:\Apps\Models\ollama\app\ollama.exe`; `OLLAMA_MODELS=D:\Apps\ollama\models`; API: `http://127.0.0.1:11434` (сейчас не слушается).
 
-**Правило:** любое утверждение о наличии модели, `small_model` или бэкенде OpenCode начинается с вызова инструмента. Значения из этого файла, из скилов, из конфига агента и из прошлых сообщений считаются недоверенными, пока не перечитаны из источника. Никогда не приводить «вывод `ollama list`», если эта команда реально не выполнялась: без вызова инструмента писать `UNVERIFIED`.
+**Правило:** любое утверждение о наличии модели, `small_model` или бэкенде OpenCode начинается с вызова инструмента. Значения из этого файла, из скилов и из прошлых сообщений считаются недоверенными, пока не перечитаны из источника. Никогда не приводить «вывод `ollama list`», если эта команда реально не выполнялась: без вызова инструмента писать `UNVERIFIED`.
 
 ## Проверка состояния
 
@@ -22,7 +22,6 @@ $o = 'D:\Apps\Models\ollama\app\ollama.exe'
 & $o list                       # список моделей; сейчас пусто
 & $o ps                         # загруженные модели; сейчас пусто
 Get-Content 'C:\Users\zhega\.config\opencode\opencode.json' | Select-String '"model"|"small_model"'
-Select-String '^model:' 'C:\Users\zhega\.config\opencode\agents\local-worker.md'
 Invoke-RestMethod http://127.0.0.1:11434/api/tags
 ```
 
