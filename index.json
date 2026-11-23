@@ -1,4 +1,4 @@
-{
+﻿{
     "skills": [
         {
             "name": "debug-powershell",
@@ -28,13 +28,7 @@
                 "SKILL.md"
             ]
         },
-        {
-            "name": "ollama-local",
-            "version": "1",
-            "files": [
-                "SKILL.md"
-            ]
-        },
+
         {
             "name": "secrets-audit",
             "version": "1",
