@@ -1,4 +1,4 @@
-﻿{
+{
     "skills": [
         {
             "name": "debug-powershell",
@@ -63,6 +63,61 @@
             "version": "1",
             "files": [
                 "SKILL.md"
+            ]
+        },
+        {
+            "name": "beads",
+            "version": "1",
+            "files": [
+                "SKILL.md",
+                "CLAUDE.md",
+                "README.md",
+                "adr/0001-bd-prime-as-source-of-truth.md",
+                "agents/openai.yaml",
+                "commands/audit.md",
+                "commands/blocked.md",
+                "commands/close.md",
+                "commands/comments.md",
+                "commands/compact.md",
+                "commands/create.md",
+                "commands/decision.md",
+                "commands/delete.md",
+                "commands/dep.md",
+                "commands/epic.md",
+                "commands/export.md",
+                "commands/import.md",
+                "commands/init.md",
+                "commands/label.md",
+                "commands/list.md",
+                "commands/prime.md",
+                "commands/quickstart.md",
+                "commands/ready.md",
+                "commands/rename-prefix.md",
+                "commands/reopen.md",
+                "commands/restore.md",
+                "commands/search.md",
+                "commands/show.md",
+                "commands/stats.md",
+                "commands/sync.md",
+                "commands/template.md",
+                "commands/update.md",
+                "commands/version.md",
+                "commands/workflow.md",
+                "resources/AGENTS.md",
+                "resources/ASYNC_GATES.md",
+                "resources/BOUNDARIES.md",
+                "resources/CHEMISTRY_PATTERNS.md",
+                "resources/CLI_REFERENCE.md",
+                "resources/DEPENDENCIES.md",
+                "resources/INTEGRATION_PATTERNS.md",
+                "resources/ISSUE_CREATION.md",
+                "resources/MOLECULES.md",
+                "resources/PATTERNS.md",
+                "resources/RESUMABILITY.md",
+                "resources/STATIC_DATA.md",
+                "resources/TROUBLESHOOTING.md",
+                "resources/WORKFLOWS.md",
+                "resources/WORKTREES.md"
             ]
         }
     ]
