@@ -1,4 +1,4 @@
-# opencode-skills
+﻿# opencode-skills
 
 Каталог скилов для [OpenCode](https://opencode.ai/docs/skills/).
 
@@ -41,7 +41,7 @@ HTTP-каталог (`skills: ["https://..."]`) не поддерживает а
 | ID | Назначение |
 |---|---|
 | `windows-admin` | Windows 11 / PowerShell 5.1: службы, планировщик, ACL, реестр, шары, Defender |
-| `ollama-local` | Локальный Ollama, VRAM-бюджет, `num_ctx`, замер tok/s, пределы 8B |
+
 | `debug-powershell` | Провалы PS 5.1: нет `&&`, BOM, `$LASTEXITCODE`, JSON, процессы |
 | `git-workflow` | Коммиты, ветки, worktree, CRLF, откаты, секреты в истории |
 | `secrets-audit` | Скан ключей в файлах и git-истории + `scripts/scan-secrets.ps1` |
