@@ -106,6 +106,13 @@
                 "resources/WORKFLOWS.md",
                 "resources/WORKTREES.md"
             ]
+        },
+        {
+            "name": "browserbase",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
         }
     ]
 }
