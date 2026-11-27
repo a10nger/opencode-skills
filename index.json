@@ -113,6 +113,20 @@
             "files": [
                 "SKILL.md"
             ]
+        },
+        {
+            "name": "exa",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
+        },
+        {
+            "name": "telegram",
+            "version": "1",
+            "files": [
+                "SKILL.md"
+            ]
         }
     ]
 }
