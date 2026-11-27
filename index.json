@@ -116,14 +116,14 @@
         },
         {
             "name": "exa",
-            "version": "1",
+            "version": "2",
             "files": [
                 "SKILL.md"
             ]
         },
         {
             "name": "telegram",
-            "version": "1",
+            "version": "2",
             "files": [
                 "SKILL.md"
             ]
