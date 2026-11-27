@@ -127,6 +127,21 @@
             "files": [
                 "SKILL.md"
             ]
+        },
+        {
+            "name": "rea",
+            "version": "1",
+            "files": [
+                "references/android-applications.md",
+                "references/connection-and-recovery.md",
+                "references/desktop-build.md",
+                "references/environments.md",
+                "references/evidence-workflows.md",
+                "references/javascript-applications.md",
+                "references/native-and-artifacts.md",
+                "references/runtime-observation.md",
+                "SKILL.md"
+            ]
         }
     ]
 }
